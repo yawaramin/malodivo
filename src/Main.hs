@@ -9,7 +9,6 @@ import GHC.Generics
 import qualified Bill as B
 import qualified Cap as C
 import qualified DistrictFund as D
-import qualified Output as O
 
 instance FromJSON B.Bill
 instance FromJSON C.Cap
@@ -43,6 +42,12 @@ data Output =
 
 instance ToJSON Output
 
+{-| districtTotal district output returns the district's total funds
+allocation to all its funded bills. -}
+districtTotal :: String -> Output -> Int
+districtTotal district (Output districtFunds) =
+  sum (map D.amount (filter ((==district) . D.district) districtFunds))
+
 allocate :: Input -> Output
 allocate _ = Output { districtFunds = [] }
 
@@ -50,5 +55,5 @@ main :: IO ()
 main = interact $ \input ->
   case decode (BS.pack input) :: Maybe Input of
     Just input -> BS.unpack . encode . allocate $ input
-    Nothing -> ""
+    Nothing -> BS.unpack . encode $ "Error: could not understand input"
 
