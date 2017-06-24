@@ -8,9 +8,12 @@ import GHC.Generics
 
 import qualified Bill as B
 import qualified Cap as C
+import qualified DistrictFund as D
+import qualified Output as O
 
 instance FromJSON B.Bill
 instance FromJSON C.Cap
+instance ToJSON D.DistrictFund
 
 data District =
   District
@@ -35,12 +38,13 @@ data Input =
 
 instance FromJSON Input
 
-data Output = Output () deriving (Generic)
+data Output =
+  Output { districtFunds :: [D.DistrictFund] } deriving (Generic)
 
 instance ToJSON Output
 
 allocate :: Input -> Output
-allocate _ = Output ()
+allocate _ = Output { districtFunds = [] }
 
 main :: IO ()
 main = interact $ \input ->
