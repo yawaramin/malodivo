@@ -1,75 +1,45 @@
-{ "bills":
-  [ { "name": "An Act to Construct the Great Wall of Malodivo",
-      "category": "Defense",
-      "amount": 200000 },
-      
-    { "name": "An Act to Construct Shelters for the Homeless",
-      "category": "Welfare",
-      "amount": 40000 },
-      
-    { "name": "An Act to Fund the Development of Longer-Lasting Paper",
-      "category": "Science",
-      "amount": 14000 },
+{ "inputCategories":
+    [ { "categoryId": 1, "categoryName": "Defense" },
+      { "categoryId": 2, "categoryName": "Welfare" },
+      { "categoryId": 3, "categoryName": "Science" } ],
 
-    { "name": "An Act to Increase Retirement Benefits for Veterans",
-      "category": "Welfare",
-      "amount": 90000 } ],
+  "inputBills":
+    [ { "billId": 1,
+        "billName": "An Act to Construct the Great Wall of Malodivo",
+        "billCategory": 1,
+        "billAmount": 200000 },
 
-  "districts":
-    [ { "name": "Palolene",
-        "availableFunds": 200000,
-        "categoryDefaultFunding":
-          [ { "category": "Defense", "amount": 1000 },
-            { "category": "Welfare", "amount": 3000 },
-            { "category": "Science", "amount": 5000 } ],
+      { "billId": 2,
+        "billName": "An Act to Construct Shelters for the Homeless",
+        "billCategory": 2,
+        "billAmount": 40000 },
 
-        "billSpecificFunding":
-          [ { "bill": "An Act to Increase Retirement Benefits for Veterans",
-              "amount": 500 },
+      { "billId": 3,
+        "billName": "An Act to Fund the Development of Longer-Lasting Paper",
+        "billCategory": 3,
+        "billAmount": 14000 },
 
-            { "bill": "An Act to Fund the Development of Longer-Lasting Paper",
-              "amount": 7500 } ],
+      { "billId": 4,
+        "billName": "An Act to Increase Retirement Benefits for Veterans",
+        "billCategory": 2,
+        "billAmount": 90000 } ],
 
-        "caps":
-          [ { "category": "Defense", "amount": 3000 },
-            { "category": "Welfare", "amount": 3199 },
-            { "category": "Science", "amount": 15000 } ] },
+  "inputDistricts":
+    [ { "districtId": 1,
+        "districtName": "Palolene",
+        "districtAvailFund": 200000 } ],
 
-      { "name": "Southern Palolene",
-        "availableFunds": 200000,
-        "categoryDefaultFunding":
-          [ { "category": "Defense", "amount": 1000 },
-            { "category": "Welfare", "amount": 3000 },
-            { "category": "Science", "amount": 5000 } ],
+  "inputCdfs":
+    [ { "cfDistrict": 1, "cfCategory": 1, "cfAmount": 1000 },
+      { "cfDistrict": 1, "cfCategory": 2, "cfAmount": 3000 },
+      { "cfDistrict": 1, "cfCategory": 3, "cfAmount": 5000 } ],
 
-        "billSpecificFunding":
-          [ { "bill": "An Act to Increase Retirement Benefits for Veterans",
-              "amount": 500 },
+  "inputBsfs":
+    [ { "bsfDistrict": 1, "bsfBill": 4, "bsfAmount": 500 },
+      { "bsfDistrict": 1, "bsfBill": 3, "bsfAmount": 7500 } ],
 
-            { "bill": "An Act to Fund the Development of Longer-Lasting Paper",
-              "amount": 7500 } ],
-
-        "caps":
-          [ { "category": "Defense", "amount": 3000 },
-            { "category": "Welfare", "amount": 3199 },
-            { "category": "Science", "amount": 15000 } ] },
-
-      { "name": "Lakos",
-        "availableFunds": 200000,
-        "categoryDefaultFunding":
-          [ { "category": "Defense", "amount": 1000 },
-            { "category": "Welfare", "amount": 3000 },
-            { "category": "Science", "amount": 5000 } ],
-
-        "billSpecificFunding":
-          [ { "bill": "An Act to Increase Retirement Benefits for Veterans",
-              "amount": 500 },
-
-            { "bill": "An Act to Fund the Development of Longer-Lasting Paper",
-              "amount": 7500 } ],
-
-        "caps":
-          [ { "category": "Defense", "amount": 3000 },
-            { "category": "Welfare", "amount": 3199 },
-            { "category": "Science", "amount": 15000 } ] } ] }
+  "inputCategoryCaps":
+    [ { "cfDistrict": 1, "cfCategory": 1, "cfAmount": 3000 },
+      { "cfDistrict": 1, "cfCategory": 2, "cfAmount": 3199 },
+      { "cfDistrict": 1, "cfCategory": 3, "cfAmount": 15000 } ] }
 

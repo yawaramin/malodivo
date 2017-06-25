@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE NamedFieldPuns #-}
 
 module Main where
 
@@ -6,50 +7,59 @@ import Data.Aeson
 import qualified Data.ByteString.Lazy.Char8 as BS
 import GHC.Generics
 
-import qualified Bill as B
-import qualified Cap as C
-import qualified DistrictFund as D
+newtype Id a = Id Int deriving (Generic, Show)
+type Fund = Int
 
-instance FromJSON B.Bill
-instance FromJSON C.Cap
-instance ToJSON D.DistrictFund
+data Category =
+  Category { categoryId :: Id Category, categoryName :: String }
+  deriving (Generic, Show)
+
+data Bill =
+  Bill
+    { billId :: Id Bill,
+      billName :: String,
+      billCategory :: Id Category,
+      billAmount :: Fund } deriving (Generic, Show)
 
 data District =
   District
-    { name :: String,
-      availableFunds :: Int,
-      categoryDefaultFunding :: [C.Cap],
-      billSpecificFunding :: [BillSpecificFunding],
-      caps :: [C.Cap] }
-  deriving (Generic, Show)
+    { districtId :: Id District,
+      districtName :: String,
+      districtAvailFund :: Fund } deriving (Generic, Show)
 
-instance FromJSON District
+data CategoryFund =
+  Cf
+    { cfDistrict :: Id District,
+      cfCategory :: Id Category,
+      cfAmount :: Fund } deriving (Generic, Show)
 
-data BillSpecificFunding =
-  BillSpecificFunding { bill :: String, amount :: Int }
-  deriving (Generic, Show)
-
-instance FromJSON BillSpecificFunding
+data BillSpecificFund =
+  Bsf
+    { bsfDistrict :: Id District,
+      bsfBill :: Id Bill,
+      bsfAmount :: Fund } deriving (Generic, Show)
 
 data Input =
-  Input { bills :: [B.Bill], districts :: [District] }
-  deriving (Generic, Show)
+  Input
+    { inputCategories :: [Category],
+      inputBills :: [Bill],
+      inputDistricts :: [District],
+      inputCdfs :: [CategoryFund],
+      inputBsfs :: [BillSpecificFund],
+      inputCategoryCaps :: [CategoryFund] } deriving (Generic, Show)
 
+newtype Output =
+  Output { output :: [BillSpecificFund] } deriving (Generic)
+
+allocate _ = ()
+
+instance FromJSON (Id a)
+instance FromJSON BillSpecificFund
+instance FromJSON CategoryFund
+instance FromJSON District
+instance FromJSON Bill
+instance FromJSON Category
 instance FromJSON Input
-
-data Output =
-  Output { districtFunds :: [D.DistrictFund] } deriving (Generic)
-
-instance ToJSON Output
-
-{-| districtTotal district output returns the district's total funds
-allocation to all its funded bills. -}
-districtTotal :: String -> Output -> Int
-districtTotal district (Output districtFunds) =
-  sum (map D.amount (filter ((==district) . D.district) districtFunds))
-
-allocate :: Input -> Output
-allocate _ = Output { districtFunds = [] }
 
 main :: IO ()
 main = interact $ \input ->
