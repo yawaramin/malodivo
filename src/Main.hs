@@ -10,6 +10,9 @@ import GHC.Generics
 newtype Id a = Id Int deriving (Generic, Show)
 type Fund = Int
 
+{- Normalise all the input data, similarly to how they'd be stored in a
+relational database. -}
+
 data Category =
   Category { categoryId :: Id Category, categoryName :: String }
   deriving (Generic, Show)
